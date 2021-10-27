@@ -1,9 +1,16 @@
 const HDWalletProvider = require("truffle-hdwallet-provider");
 
+require('dotenv').config();
+
+const INFURA_KEY = process.env.INFURA_KEY;
+const MATIC_KEY = process.env.MATIC_KEY;
+const ALCHEMY_KEY = process.env.ALCHEMY_KEY;
 const MNEMONIC = process.env.MNEMONIC;
-const NODE_API_KEY = process.env.INFURA_KEY || process.env.ALCHEMY_KEY;
+
+const NODE_API_KEY = INFURA_KEY || ALCHEMY_KEY;
 const isInfura = !!process.env.INFURA_KEY;
 
+/*
 const needsNodeAPI =
   process.env.npm_config_argv &&
   (process.env.npm_config_argv.includes("rinkeby") ||
@@ -13,6 +20,7 @@ if ((!MNEMONIC || !NODE_API_KEY) && needsNodeAPI) {
   console.error("Please set a mnemonic and ALCHEMY_KEY or INFURA_KEY.");
   process.exit(0);
 }
+*/
 
 const rinkebyNodeUrl = isInfura
   ? "https://rinkeby.infura.io/v3/" + NODE_API_KEY
@@ -23,12 +31,30 @@ const mainnetNodeUrl = isInfura
   : "https://eth-mainnet.alchemyapi.io/v2/" + NODE_API_KEY;
 
 module.exports = {
-  networks: {
+  networks: 
+  {
     development: {
       host: "localhost",
       port: 7545,
       gas: 5000000,
       network_id: "*", // Match any network id
+    },
+    mumbai: {
+      provider: function () {
+        return new HDWalletProvider(MNEMONIC, `https://rpc-mumbai.maticvigil.com/v1/${MATIC_KEY}`);
+      },
+      network_id: 80001,
+      confirmations: 2,
+      skipDryRun: true
+    },
+    matic: {
+      provider: function () {
+        return new HDWalletProvider(MNEMONIC, `https://rpc-mainnet.maticvigil.com/v1/${MATIC_KEY}`);
+      },
+      network_id: 137,
+      gas: 5000000,
+      gasPrice: 5000000000,
+      confirmations: 2,
     },
     rinkeby: {
       provider: function () {

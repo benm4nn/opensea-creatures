@@ -20,12 +20,12 @@ contract CreatureFactory is FactoryERC721, Ownable {
     address public proxyRegistryAddress;
     address public nftAddress;
     address public lootBoxNftAddress;
-    string public baseURI = "https://creatures-api.opensea.io/api/factory/";
+    string public baseURI = "";
 
     /*
-     * Enforce the existence of only 100 OpenSea creatures.
+     * Enforce the existence of only 10,000 NFTs
      */
-    uint256 CREATURE_SUPPLY = 100;
+    uint256 CREATURE_SUPPLY = 10000;
 
     /*
      * Three different options for minting Creatures (basic, premium, and gold).
@@ -47,11 +47,11 @@ contract CreatureFactory is FactoryERC721, Ownable {
     }
 
     function name() override external pure returns (string memory) {
-        return "OpenSeaCreature Item Sale";
+        return "Krazy Phace Item Sale";
     }
 
     function symbol() override external pure returns (string memory) {
-        return "CPF";
+        return "KRZP";
     }
 
     function supportsFactoryInterface() override public pure returns (bool) {
