@@ -1,6 +1,6 @@
 {
   "name": "opensea-creatures",
-  "version": "1.0.0",
+  "version": "1.22.4",
   "description": "OpenSea's smart contracts, including ERC721 templates, factories, and the storefront builder.",
   "main": "index.js",
   "scripts": {
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/ProjectOpenSea/opensea-creatures#readme",
   "dependencies": {
     "@0x/subproviders": "^6.4.1",
+    "dotenv": "^10.0.0",
     "eth-gas-reporter": "^0.2.17",
     "eth-sig-util": "^3.0.1",
     "ethereum-waffle": "^3.0.0",
