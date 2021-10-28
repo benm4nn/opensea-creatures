@@ -166,7 +166,10 @@ async function main() {
       //https://ethereum.stackexchange.com/questions/65370/contract-methods-transfer-is-a-not-a-function-error-using-web3
        // .mintTo(OWNERS_ADDRESS, BASE_URL)
        .mintTo(OWNER_ADDRESS)
-        .send({ from: OWNER_ADDRESS, gasPrice: "150000000000", gas: "3000000", chainId: 80001, });
+       //need to include chainID here 
+       //https://community.infura.io/t/deployment-failed-with-error-only-replay-protected-eip-155-transactions-allowed-over-rpc/2601
+        .send({ from: OWNER_ADDRESS,  chainId: 80001, networkCheckTimeout: 90000});
+        //gasPrice: "150000000000", gas: "9000000",
       console.log("Minted NFT " + (i+1) + ". Transaction: " + result.transactionHash);
     }
 
