@@ -1,6 +1,14 @@
-const HDWalletProvider = require("truffle-hdwallet-provider");
-const web3 = require("web3");
+/*
+to run:
+cd /Users/randb/Documents/GitHub/KrazyPhaces-opensea/scripts/
+node mint.js --network mumbai --n 3
+*/
+
 require('dotenv').config();
+const HDWalletProvider = require("@truffle/hdwallet-provider");
+//const HDWalletProvider = require("truffle-hdwallet-provider");
+const web3 = require("web3");
+
 const fs = require('fs');
 const path = require("path");
 
@@ -8,15 +16,17 @@ const INFURA_KEY = process.env.INFURA_KEY;
 const MATIC_KEY = process.env.MATIC_KEY;
 const ALCHEMY_KEY = process.env.ALCHEMY_KEY;
 const MNEMONIC = process.env.MNEMONIC;
+console.log(process.env.MNEMONIC);
 const BASE_URL = process.env.BASE_URL;
 
 var NODE_API_KEY;
 const isInfura = !!process.env.INFURA_KEY;
 
-//const FACTORY_CONTRACT_ADDRESS = process.env.FACTORY_CONTRACT_ADDRESS;
+//* Remember to write the nft address in the .env file after deploying the contract
+const FACTORY_CONTRACT_ADDRESS = process.env.FACTORY_CONTRACT_ADDRESS;
 const NFT_CONTRACT_ADDRESS = process.env.NFT_CONTRACT_ADDRESS;
 const OWNER_ADDRESS = process.env.OWNER_ADDRESS;
-//const NETWORK = process.env.NETWORK;
+const NETWORK = process.env.NETWORK;
 
 //NUM_CREATURES = 12;
 const NUM_LOOTBOXES = 4;
@@ -77,8 +87,10 @@ if (argMap.network) {
         //If you don't set a gas fee, it will assume you have no gas and give the error 
         // Error:  *** Deployment Failed ***
         //"Migrations" could not deploy due to insufficient funds
-        gas: 3000000,
+        gas: 8000000,
         gasPrice: 10000000000,
+        //    cumulativeGasUsed: 24500,
+        //effectiveGasPrice: '0x2540be400',
         chainId: 80001
       };
       break;
@@ -87,7 +99,7 @@ if (argMap.network) {
       CHAIN_URL = `https://rpc-mainnet.maticvigil.com/v1/${MATIC_KEY}`;
       Options = {
         network_id: 137,
-        // gas: 5000000,
+        // gas: 8000000,
         // gasPrice: 5000000000,
         confirmations: 2,
         chainId: 137
@@ -110,20 +122,54 @@ if (argMap.n) {
   NUM_CREATURES = parseInt(argMap.n, 10);
 };
 
-//* Remember to write the nft address in the .env file after deploying the contract
-//const NFT_CONTRACT_ADDRESS = process.env.NFT_CONTRACT_ADDRESS
-//const OWNER_ADDRESS = process.env.OWNER_ADDRESS
-
 const MUMBAI = `https://rpc-mumbai.maticvigil.com/v1/${NODE_API_KEY}`
-//const MATIC = `https://rpc-mainnet.maticvigil.com/v1/${NODE_API_KEY}`
-//const MAX_NUMBER = 10000;
+const MATIC = `https://rpc-mainnet.maticvigil.com/v1/${NODE_API_KEY}`
+//const MAX_NUMBER = 11111;
 //const NUM_ITEMS = 3;
 
 //*Parse the contract artifact for ABI reference.
 let rawdata = fs.readFileSync(path.resolve(__dirname, "../build/contracts/Creature.json"));
 
 let contractAbi = JSON.parse(rawdata);
-const NFT_ABI = contractAbi.abi
+//const NFT_ABI = contractAbi.abi
+
+const NFT_ABI = [
+  {
+    constant: false,
+    inputs: [
+      {
+        name: "_to",
+        type: "address",
+      },
+    ],
+    name: "mintTo",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
+
+const FACTORY_ABI = [
+  {
+    constant: false,
+    inputs: [
+      {
+        name: "_optionId",
+        type: "uint256",
+      },
+      {
+        name: "_toAddress",
+        type: "address",
+      },
+    ],
+    name: "mint",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
 
 async function main() {
 
@@ -161,11 +207,25 @@ async function main() {
     */
 
     for (var i = 0; i < NUM_CREATURES; i++) {
-      const result = await nftContract.methods
+
+      const factoryContract = new web3Instance.eth.Contract(
+        FACTORY_ABI,
+        //FACTORY_CONTRACT_ADDRESS,
+        "0x87981De7Ab124cd83089a2473cAeE8F6a501AB81",
+        { gasLimit: "1000000" }
+      );
+
+      const result = await factoryContract.methods
+      .mint(DEFAULT_OPTION_ID, OWNER_ADDRESS)
+
+      //const result = await nftContract.methods
+
       //mint function needs to be found in the abi i.e. search in /build/contracts/Creature.json for the minting function
       //https://ethereum.stackexchange.com/questions/65370/contract-methods-transfer-is-a-not-a-function-error-using-web3
-       // .mintTo(OWNERS_ADDRESS, BASE_URL)
-       .mintTo(OWNER_ADDRESS)
+       //.mintTo(OWNER_ADDRESS, BASE_URL)
+      
+      // .mintTo(OWNER_ADDRESS)
+      
        //need to include chainID here 
        //https://community.infura.io/t/deployment-failed-with-error-only-replay-protected-eip-155-transactions-allowed-over-rpc/2601
         .send({ from: OWNER_ADDRESS,  chainId: 80001, networkCheckTimeout: 90000});

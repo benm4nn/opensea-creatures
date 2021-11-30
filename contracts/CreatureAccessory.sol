@@ -11,8 +11,8 @@ import "./ERC1155Tradable.sol";
 contract CreatureAccessory is ERC1155Tradable {
     constructor(address _proxyRegistryAddress)
         ERC1155Tradable(
-            "OpenSea Creature Accessory",
-            "OSCA",
+            "Krazy Phace Accessory",
+            "KPHACEA",
             "https://krazyphaces.herokuapp.com/api/accessory/{id}",
             _proxyRegistryAddress
         ) {}

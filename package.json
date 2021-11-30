@@ -8,7 +8,7 @@
     "test": "DEPLOY_ALL=1 truffle test"
   },
   "solidity.packageDefaultDependenciesContractsDirectory": "",
- "solidity.packageDefaultDependenciesDirectory": "node_modules",
+  "solidity.packageDefaultDependenciesDirectory": "node_modules",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ProjectOpenSea/opensea-creatures.git"
@@ -21,6 +21,8 @@
   "homepage": "https://github.com/ProjectOpenSea/opensea-creatures#readme",
   "dependencies": {
     "@0x/subproviders": "^6.4.1",
+    "@pinata/sdk": "^1.1.23",
+    "@truffle/hdwallet-provider": "^1.7.0",
     "dotenv": "^10.0.0",
     "eth-gas-reporter": "^0.2.17",
     "eth-sig-util": "^3.0.1",
@@ -31,7 +33,7 @@
     "truffle-assertions": "^0.9.2",
     "truffle-contract-size": "^2.0.1",
     "truffle-flattener": "^1.4.2",
-    "truffle-hdwallet-provider": "1.0.17",
+    "truffle-hdwallet-provider": "^1.0.17",
     "web3": "^1.0.0-beta.34"
   },
   "engines": {

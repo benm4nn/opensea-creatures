@@ -59,11 +59,11 @@ contract CreatureAccessoryFactory is FactoryERC1155, Ownable, ReentrancyGuard {
     /////
 
     function name() override external pure returns (string memory) {
-        return "OpenSea Creature Accessory Pre-Sale";
+        return "Krazy Phace Accessory Pre-Sale";
     }
 
     function symbol() override external pure returns (string memory) {
-        return "OSCAP";
+        return "KPHACEAP";
     }
 
     function supportsFactoryInterface() override external pure returns (bool) {
@@ -118,7 +118,7 @@ contract CreatureAccessoryFactory is FactoryERC1155, Ownable, ReentrancyGuard {
     ) internal {
         require(
             _canMint(_msgSender(), _option, _amount),
-            "CreatureAccessoryFactory#_mint: CANNOT_MINT_MORE"
+            "KrazyPhaceAccessoryFactory#_mint: CANNOT_MINT_MORE"
         );
         if (_option < NUM_ITEM_OPTIONS) {
             require(

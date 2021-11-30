@@ -18,7 +18,23 @@
  *
  */
 
-const HDWalletProvider = require("truffle-hdwallet-provider");
+/*
+to run:
+cd /Users/randb/Documents/GitHub/KrazyPhaces-opensea/
+sudo DEPLOY_CREATURES_SALE=1 yarn truffle deploy --network mumbai
+sudo DEPLOY_CREATURES_SALE=1 yarn truffle deploy --reset --network mumbai
+*/
+
+// PollingBlockTracker - encountered an error while attempting to update latest block: Error: ETIMEDOUT
+// https://github.com/trufflesuite/truffle/issues/3357
+
+//const HDWalletProvider = require("@truffle/hdwallet-provider");
+//deprecated truffle-hdwallet-provider@1.0.17: WARNING: This package has been renamed to @truffle/hdwallet-provider.
+//Causes: Matic Mumbai deployment failed at migration with Replay-Protected (EIP-155) error
+//https://github.com/trufflesuite/truffle/issues/3913
+//https://stackoverflow.com/questions/68076014/matic-mumbai-deployment-failed-at-migration-with-replay-protected-eip-155-erro
+
+const HDWalletProvider = require("@truffle/hdwallet-provider");
 
 require('dotenv').config();
 
@@ -76,6 +92,10 @@ module.exports = {
       network_id: 80001,
       confirmations: 2,
       skipDryRun: true,
+      timeoutBlocks: 300,
+      //If you don't set a gas fee, it will assume you have no gas and give the error 
+      //Error:  *** Deployment Failed ***
+      //"Migrations" could not deploy due to insufficient funds
       gas: 3000000,
       gasPrice: 10000000000
     },

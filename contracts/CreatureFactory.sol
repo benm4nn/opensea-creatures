@@ -23,9 +23,9 @@ contract CreatureFactory is FactoryERC721, Ownable {
     string public baseURI = "";
 
     /*
-     * Enforce the existence of only 10,000 NFTs
+     * Enforce the existence of only 11,111 NFTs
      */
-    uint256 CREATURE_SUPPLY = 10000;
+    uint256 CREATURE_SUPPLY = 11111;
 
     /*
      * Three different options for minting Creatures (basic, premium, and gold).

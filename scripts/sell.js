@@ -1,3 +1,10 @@
+/*
+to run:
+cd /Users/randb/Documents/GitHub/KrazyPhaces-opensea
+
+https://github.com/ProjectOpenSea/opensea-js
+*/
+
 const opensea = require("opensea-js");
 const OpenSeaPort = opensea.OpenSeaPort;
 const Network = opensea.Network;
@@ -28,11 +35,13 @@ if (!FACTORY_CONTRACT_ADDRESS && !NFT_CONTRACT_ADDRESS) {
 }
 
 const BASE_DERIVATION_PATH = `44'/60'/0'/0`;
+//????????
 
 const mnemonicWalletSubprovider = new MnemonicWalletSubprovider({
   mnemonic: MNEMONIC,
   baseDerivationPath: BASE_DERIVATION_PATH,
 });
+
 const network =
   NETWORK === "mainnet" || NETWORK === "live" ? "mainnet" : "rinkeby";
 const infuraRpcSubprovider = new RPCSubprovider({

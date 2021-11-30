@@ -18,7 +18,7 @@ contract CreatureLootBox is ERC721Tradable {
     address factoryAddress;
 
     constructor(address _proxyRegistryAddress, address _factoryAddress)
-        ERC721Tradable("CreatureLootBox", "LOOTBOX", _proxyRegistryAddress)
+        ERC721Tradable("KrazyPhaceLootBox", "LOOTBOX", _proxyRegistryAddress)
     {
         factoryAddress = _factoryAddress;
     }
@@ -38,7 +38,7 @@ contract CreatureLootBox is ERC721Tradable {
     }
 
     function baseTokenURI() override public pure returns (string memory) {
-        return "https://creatures-api.opensea.io/api/box/";
+        return "https://krazyphaces.herokuapp.com/api/box/";
     }
 
     function itemsPerLootbox() public view returns (uint256) {
