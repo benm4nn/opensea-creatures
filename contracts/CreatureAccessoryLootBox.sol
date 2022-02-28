@@ -27,8 +27,8 @@ contract CreatureAccessoryLootBox is ERC1155Tradable, ReentrancyGuard {
    */
   constructor(address _proxyRegistryAddress)
   ERC1155Tradable(
-    "OpenSea Creature Accessory Loot Box",
-    "OSCALOOT",
+    "Krazy Phace Accessory Loot Box",
+    "KPHACEALOOT",
     "",
     _proxyRegistryAddress
   ) {}
