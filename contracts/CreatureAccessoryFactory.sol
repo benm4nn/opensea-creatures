@@ -21,7 +21,7 @@ contract CreatureAccessoryFactory is FactoryERC1155, Ownable, ReentrancyGuard {
     address public nftAddress;
     address public lootBoxAddress;
     string
-        internal constant baseMetadataURI = "https://creatures-api.opensea.io/api/";
+        internal constant baseMetadataURI = "https://krazyphaces.herokuapp.com/api/";
     uint256 constant UINT256_MAX = ~uint256(0);
 
     /*
@@ -59,11 +59,11 @@ contract CreatureAccessoryFactory is FactoryERC1155, Ownable, ReentrancyGuard {
     /////
 
     function name() override external pure returns (string memory) {
-        return "OpenSea Creature Accessory Pre-Sale";
+        return "Krazy Phace Accessory Pre-Sale";
     }
 
     function symbol() override external pure returns (string memory) {
-        return "OSCAP";
+        return "KZYPAP";
     }
 
     function supportsFactoryInterface() override external pure returns (bool) {

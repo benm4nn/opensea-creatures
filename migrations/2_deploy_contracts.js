@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const Creature = artifacts.require("./Creature.sol");
 const CreatureFactory = artifacts.require("./CreatureFactory.sol");
 const CreatureLootBox = artifacts.require("./CreatureLootBox.sol");
