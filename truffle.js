@@ -1,52 +1,14 @@
-/**
- * Use this file to configure your truffle project. It's seeded with some
- * common settings for different networks and features like migrations,
- * compilation and testing. Uncomment the ones you need or modify
- * them to suit your project as necessary.
- *
- * More information about configuration can be found at:
- *
- * trufflesuite.com/docs/advanced/configuration
- *
- * To deploy via Infura you'll need a wallet provider (like @truffle/hdwallet-provider)
- * to sign your transactions before they're sent to a remote public node. Infura accounts
- * are available for free at: infura.io/register.
- *
- * You'll also need a mnemonic - the twelve word phrase the wallet uses to generate
- * public/private key pairs. If you're publishing your code to GitHub make sure you load this
- * phrase from a file you've .gitignored so it doesn't accidentally become public.
- *
- */
+//https://blog.diamondhandshotel.com/how-to-create-your-own-nft-using-the-opensea-creatures-template/
 
-/*
-to run:
-cd /Users/randb/Documents/GitHub/KrazyPhaces-opensea/
-sudo DEPLOY_CREATURES_SALE=1 yarn truffle deploy --network mumbai
-sudo DEPLOY_CREATURES_SALE=1 yarn truffle deploy --reset --network mumbai
-*/
-
-// PollingBlockTracker - encountered an error while attempting to update latest block: Error: ETIMEDOUT
-// https://github.com/trufflesuite/truffle/issues/3357
-
-//const HDWalletProvider = require("@truffle/hdwallet-provider");
-//deprecated truffle-hdwallet-provider@1.0.17: WARNING: This package has been renamed to @truffle/hdwallet-provider.
-//Causes: Matic Mumbai deployment failed at migration with Replay-Protected (EIP-155) error
-//https://github.com/trufflesuite/truffle/issues/3913
-//https://stackoverflow.com/questions/68076014/matic-mumbai-deployment-failed-at-migration-with-replay-protected-eip-155-erro
-
+//const HDWalletProvider = require("truffle-hdwallet-provider");
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 
 require('dotenv').config();
 
-const INFURA_KEY = process.env.INFURA_KEY;
-const MATIC_KEY = process.env.MATIC_KEY;
-const ALCHEMY_KEY = process.env.ALCHEMY_KEY;
 const MNEMONIC = process.env.MNEMONIC;
-
-const NODE_API_KEY = INFURA_KEY || ALCHEMY_KEY;
+const NODE_API_KEY = process.env.INFURA_KEY || process.env.ALCHEMY_KEY;
 const isInfura = !!process.env.INFURA_KEY;
 
-/*
 const needsNodeAPI =
   process.env.npm_config_argv &&
   (process.env.npm_config_argv.includes("rinkeby") ||
@@ -56,7 +18,6 @@ if ((!MNEMONIC || !NODE_API_KEY) && needsNodeAPI) {
   console.error("Please set a mnemonic and ALCHEMY_KEY or INFURA_KEY.");
   process.exit(0);
 }
-*/
 
 const rinkebyNodeUrl = isInfura
   ? "https://rinkeby.infura.io/v3/" + NODE_API_KEY
@@ -66,58 +27,29 @@ const mainnetNodeUrl = isInfura
   ? "https://mainnet.infura.io/v3/" + NODE_API_KEY
   : "https://eth-mainnet.alchemyapi.io/v2/" + NODE_API_KEY;
 
-  /**
-   * Networks define how you connect to your ethereum client and let you set the
-   * defaults web3 uses to send transactions. If you don't specify one truffle
-   * will spin up a development blockchain for you on port 9545 when you
-   * run `develop` or `test`. You can ask a truffle command to use a specific
-   * network from the command line, e.g
-   *
-   * $ truffle test --network <network-name>
-   */
-
 module.exports = {
-  networks: 
-  {
+  networks: {
     development: {
       host: "localhost",
       port: 7545,
       gas: 5000000,
       network_id: "*", // Match any network id
     },
-    mumbai: {
-      provider: function () {
-        return new HDWalletProvider(MNEMONIC, `https://rpc-mumbai.maticvigil.com/v1/${MATIC_KEY}`);
-      },
-      network_id: 80001,
-      confirmations: 2,
-      skipDryRun: true,
-      timeoutBlocks: 300,
-      //If you don't set a gas fee, it will assume you have no gas and give the error 
-      //Error:  *** Deployment Failed ***
-      //"Migrations" could not deploy due to insufficient funds
-      gas: 3000000,
-      gasPrice: 10000000000
-    },
-    matic: {
-      provider: function () {
-        return new HDWalletProvider(MNEMONIC, `https://rpc-mainnet.maticvigil.com/v1/${MATIC_KEY}`);
-      },
-      network_id: 137,
-     // gas: 5000000,
-    //  gasPrice: 5000000000,
-      confirmations: 2,
-    },
     rinkeby: {
       provider: function () {
         return new HDWalletProvider(MNEMONIC, rinkebyNodeUrl);
       },
-      //gas: 5000000,
-      gas: 8000000,
+      gas: 5000000,
       network_id: 4,
+      websockets: true,
+      networkCheckTimeout: 1000000,
+      skipDryRun: true,
+      //gasPrice: 10e9,
+      //gas: 10e6,
     },
     live: {
       network_id: 1,
+      networkCheckTimeout: 1000000,
       provider: function () {
         return new HDWalletProvider(MNEMONIC, mainnetNodeUrl);
       },

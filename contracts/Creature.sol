@@ -6,7 +6,7 @@ import "./ERC721Tradable.sol";
 
 /**
  * @title Creature
- * Creature - a contract for my NFT.
+ * Creature - a contract for my Krazy Phaces NFTs
  */
 contract Creature is ERC721Tradable {
     constructor(address _proxyRegistryAddress)

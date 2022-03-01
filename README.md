@@ -48,6 +48,7 @@ export ALCHEMY_KEY="<your_alchemy_project_id>"
 export MNEMONIC="<metmask_mnemonic>"
 export DEPLOY_CREATURES_SALE=0 
 yarn truffle deploy --network rinkeby
+DEPLOY_CREATURES_SALE=0 yarn truffle deploy --network rinkeby
 ```
 
 ### Minting tokens.
